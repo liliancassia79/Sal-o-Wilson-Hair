@@ -1,6 +1,6 @@
-# ✂️ Wilson Hair - Sistema de Agendamento Online
+# ✂️ Companhia da Beleza - Sistema de Agendamento Online
 
-Este é um projeto de uma Landing Page e fluxo de agendamento desenvolvido para o salão **Wilson Hair**. O design foi inteiramente baseado em um protótipo do **Figma**, focando em uma experiência de usuário (UX) elegante e moderna com *Dark Mode*.
+Este é um projeto de uma Landing Page e fluxo de agendamento desenvolvido para o salão **Companhia da Beleza**. O design foi inteiramente baseado em um protótipo do **Figma**, focando em uma experiência de usuário (UX) elegante e moderna com *Dark Mode*.
 
 ---
 

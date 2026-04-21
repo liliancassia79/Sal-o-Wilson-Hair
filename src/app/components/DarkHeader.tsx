@@ -14,8 +14,8 @@ export function DarkHeader({ onBookNow }: DarkHeaderProps) {
           <div className="flex items-center gap-3">
             <Crown className="w-8 h-8 text-amber-500" />
             <div className="flex flex-col">
-              <span className="text-xl text-white tracking-wider">WILSON HAIR</span>
-              <span className="text-xs text-amber-500 tracking-widest">PREMIUM SALON</span>
+                <span className="text-xl text-white tracking-wider">COMPANHIA DA BELEZA</span>
+                <span className="text-xs text-amber-500 tracking-widest">PREMIUM SALON</span>
             </div>
           </div>
           

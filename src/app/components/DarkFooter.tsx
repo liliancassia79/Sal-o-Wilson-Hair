@@ -8,7 +8,7 @@ export function DarkFooter() {
           <div className="flex items-center gap-3 mb-4">
             <Crown className="w-8 h-8 text-amber-500" />
             <div className="flex flex-col">
-              <span className="text-2xl tracking-wider">WILSON HAIR</span>
+              <span className="text-2xl tracking-wider">COMPANHIA DA BELEZA</span>
               <span className="text-xs text-amber-500 tracking-widest">PREMIUM SALON</span>
             </div>
           </div>
@@ -18,7 +18,7 @@ export function DarkFooter() {
           </p>
           <div className="border-t border-zinc-800 pt-6 w-full">
             <p className="text-gray-500 text-sm">
-              &copy; 2026 Wilson Hair. Todos os direitos reservados.
+              &copy; 2026 Companhia da Beleza. Todos os direitos reservados.
             </p>
           </div>
         </div>

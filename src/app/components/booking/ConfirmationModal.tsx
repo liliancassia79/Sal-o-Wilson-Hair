@@ -12,7 +12,7 @@ interface ConfirmationModalProps {
 
 export function ConfirmationModal({ bookingData, onClose }: ConfirmationModalProps) {
   const formattedDate = bookingData.date ? format(new Date(bookingData.date), "dd/MM/yyyy") : "";
-  const message = `Olá Wilson Hair! Gostaria de confirmar meu agendamento:
+  const message = `Olá Companhia da Beleza! Gostaria de confirmar meu agendamento:
     
 *Detalhes do Agendamento:*
 💇‍♂️ Serviço: ${bookingData.service?.name}

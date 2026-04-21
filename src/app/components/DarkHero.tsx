@@ -13,7 +13,7 @@ export function DarkHero({ onBookNow }: DarkHeroProps) {
       <div className="absolute inset-0">
         <ImageWithFallback
           src="https://images.unsplash.com/photo-1578951395970-4deb0f6833ac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBiYXJiZXJzaG9wJTIwZGFya3xlbnwxfHx8fDE3NzM4MzYzMjl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-          alt="Wilson Hair Salon"
+          alt="Companhia da Beleza Salon"
           className="w-full h-full object-cover opacity-40"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black"></div>
@@ -39,7 +39,7 @@ export function DarkHero({ onBookNow }: DarkHeroProps) {
           transition={{ delay: 0.4 }}
           className="text-6xl md:text-8xl mb-4 tracking-wider"
         >
-          WILSON HAIR
+          COMPANHIA DA BELEZA
         </motion.h1>
         <motion.div 
           initial={{ scaleX: 0 }}
