@@ -1,6 +1,6 @@
-# ✂️ Companhia da Beleza - Sistema de Agendamento Online
+# ✂️ Cia da Beleza - Sistema de Agendamento Online
 
-Este é um projeto de uma Landing Page e fluxo de agendamento desenvolvido para o salão **Companhia da Beleza**. O design foi inteiramente baseado em um protótipo do **Figma**, focando em uma experiência de usuário (UX) elegante e moderna com *Dark Mode*.
+Este é um projeto de uma Landing Page e fluxo de agendamento desenvolvido para o salão **Cia da Beleza**. O design foi inteiramente baseado em um protótipo do **Figma**, focando em uma experiência de usuário (UX) elegante e moderna com *Dark Mode*.
 
 ---
 
@@ -37,7 +37,7 @@ Este projeto foi construído utilizando as seguintes tecnologias:
 └── README.md        # Documentação do projeto
   
 
- https://www.figma.com/design/3YOjMjkVgmcklxcPH04p7i/Wilson-Hair.
+ https://www.figma.com/make/3YOjMjkVgmcklxcPH04p7i/Cia-da-Beleza?t=CgnUVTscORExmIqw-1
 
   
   

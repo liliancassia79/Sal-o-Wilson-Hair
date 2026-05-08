@@ -7,41 +7,43 @@ export function DarkContact() {
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl text-white mb-4 tracking-wide">CONTATO</h2>
           <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="h-px w-16 bg-amber-500"></div>
-            <Scissors className="w-6 h-6 text-amber-500" />
-            <div className="h-px w-16 bg-amber-500"></div>
+            <div className="h-px w-16 bg-[#d4af37]"></div>
+            <Scissors className="w-6 h-6 text-[#d4af37]" />
+            <div className="h-px w-16 bg-[#d4af37]"></div>
           </div>
           <p className="text-xl text-gray-400">
             Visite-nos ou entre em contato
           </p>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="bg-zinc-900 p-6 rounded-lg border border-zinc-800">
             <div className="flex flex-col items-center text-center">
-              <div className="bg-amber-500/10 p-4 rounded-full mb-4">
-                <MapPin className="w-8 h-8 text-amber-500" />
+              <div className="bg-[#d4af37]/10 p-4 rounded-full mb-4">
+                <MapPin className="w-8 h-8 text-[#d4af37]" />
               </div>
               <h3 className="text-xl text-white mb-2">Endereço</h3>
               <p className="text-gray-400">
-                Rua da Moda, 456<br />
-                Centro - São Paulo, SP
+                Passagem Péricles Guedes 63<br />
+                Bairro: Castanheira<br />
+                CEP: 66.645-290<br />
+                <span className="text-sm mt-1 block">Atrás do Shopping Castanheira</span>
               </p>
             </div>
           </div>
 
           <div className="bg-zinc-900 p-6 rounded-lg border border-zinc-800">
             <div className="flex flex-col items-center text-center">
-              <div className="bg-amber-500/10 p-4 rounded-full mb-4">
-                <Phone className="w-8 h-8 text-amber-500" />
+              <div className="bg-[#d4af37]/10 p-4 rounded-full mb-4">
+                <Phone className="w-8 h-8 text-[#d4af37]" />
               </div>
               <h3 className="text-xl text-white mb-2">Telefone</h3>
-              <p className="text-gray-400 mb-3">(11) 98765-4321</p>
+              <p className="text-gray-400 mb-3">(91) 98475-7953</p>
               <div className="flex gap-3">
-                <a href="#" className="text-gray-400 hover:text-amber-500 transition-colors">
+                <a href="#" className="text-gray-400 hover:text-[#d4af37] transition-colors">
                   <Instagram className="w-6 h-6" />
                 </a>
-                <a href="#" className="text-gray-400 hover:text-amber-500 transition-colors">
+                <a href="#" className="text-gray-400 hover:text-[#d4af37] transition-colors">
                   <Facebook className="w-6 h-6" />
                 </a>
               </div>
@@ -50,8 +52,8 @@ export function DarkContact() {
 
           <div className="bg-zinc-900 p-6 rounded-lg border border-zinc-800">
             <div className="flex flex-col items-center text-center">
-              <div className="bg-amber-500/10 p-4 rounded-full mb-4">
-                <Clock className="w-8 h-8 text-amber-500" />
+              <div className="bg-[#d4af37]/10 p-4 rounded-full mb-4">
+                <Clock className="w-8 h-8 text-[#d4af37]" />
               </div>
               <h3 className="text-xl text-white mb-2">Horário</h3>
               <p className="text-gray-400">

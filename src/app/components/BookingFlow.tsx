@@ -76,10 +76,10 @@ export function BookingFlow({ onClose }: BookingFlowProps) {
 
   return (
     <>
-      <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 overflow-y-auto">
-        <div className="bg-zinc-900 rounded-lg w-full max-w-4xl my-8">
+      <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-0 sm:p-4 overflow-y-auto">
+        <div className="bg-zinc-900 sm:rounded-lg w-full min-h-screen sm:min-h-0 max-w-4xl sm:my-8 flex flex-col">
           {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b border-zinc-800">
+          <div className="flex items-center justify-between p-4 sm:p-6 border-b border-zinc-800">
             <h2 className="text-2xl text-white">Novo Agendamento</h2>
             <button 
               onClick={onClose}
@@ -90,16 +90,16 @@ export function BookingFlow({ onClose }: BookingFlowProps) {
           </div>
 
           {/* Stepper */}
-          <div className="p-6 border-b border-zinc-800">
-            <div className="flex items-center justify-between">
+          <div className="p-4 sm:p-6 border-b border-zinc-800 overflow-x-auto">
+            <div className="flex items-center justify-between min-w-[300px]">
               {steps.map((step, index) => (
                 <div key={step.id} className="flex items-center flex-1">
                   <div className="flex flex-col items-center flex-1">
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-colors ${
                       currentStep > step.id 
-                        ? 'bg-amber-500 border-amber-500' 
+                        ? 'bg-[#d4af37] border-[#d4af37]' 
                         : currentStep === step.id
-                        ? 'border-amber-500 text-amber-500'
+                        ? 'border-[#d4af37] text-[#d4af37]'
                         : 'border-zinc-700 text-zinc-600'
                     }`}>
                       {currentStep > step.id ? (
@@ -116,7 +116,7 @@ export function BookingFlow({ onClose }: BookingFlowProps) {
                   </div>
                   {index < steps.length - 1 && (
                     <div className={`h-0.5 flex-1 mx-2 ${
-                      currentStep > step.id ? 'bg-amber-500' : 'bg-zinc-800'
+                      currentStep > step.id ? 'bg-[#d4af37]' : 'bg-zinc-800'
                     }`}></div>
                   )}
                 </div>
@@ -125,7 +125,7 @@ export function BookingFlow({ onClose }: BookingFlowProps) {
           </div>
 
           {/* Content */}
-          <div className="p-6 min-h-[400px]">
+          <div className="p-4 sm:p-6 min-h-[400px]">
             {currentStep === 1 && (
               <ServiceSelection 
                 selectedService={bookingData.service}
@@ -155,7 +155,7 @@ export function BookingFlow({ onClose }: BookingFlowProps) {
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-between p-6 border-t border-zinc-800">
+          <div className="flex items-center justify-between p-4 sm:p-6 border-t border-zinc-800 mt-auto">
             <Button
               onClick={handleBack}
               variant="outline"
@@ -167,7 +167,7 @@ export function BookingFlow({ onClose }: BookingFlowProps) {
             <Button
               onClick={handleNext}
               disabled={!canProceed()}
-              className="bg-amber-500 hover:bg-amber-600 text-black disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-[#d4af37] hover:bg-[#b5952f] text-black disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {currentStep === 4 ? 'Confirmar' : 'Próximo'}
             </Button>

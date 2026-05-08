@@ -17,9 +17,9 @@ export function DarkGallery() {
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl text-white mb-4 tracking-wide">GALERIA</h2>
           <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="h-px w-16 bg-amber-500"></div>
-            <Scissors className="w-6 h-6 text-amber-500" />
-            <div className="h-px w-16 bg-amber-500"></div>
+            <div className="h-px w-16 bg-[#d4af37]"></div>
+            <Scissors className="w-6 h-6 text-[#d4af37]" />
+            <div className="h-px w-16 bg-[#d4af37]"></div>
           </div>
           <p className="text-xl text-gray-400">
             Nossos melhores trabalhos

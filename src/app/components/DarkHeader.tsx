@@ -12,27 +12,27 @@ export function DarkHeader({ onBookNow }: DarkHeaderProps) {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <Crown className="w-8 h-8 text-amber-500" />
+            <Crown className="w-8 h-8 text-[#d4af37] shrink-0" />
             <div className="flex flex-col">
-                <span className="text-xl text-white tracking-wider">COMPANHIA DA BELEZA</span>
-                <span className="text-xs text-amber-500 tracking-widest">PREMIUM SALON</span>
+              <span className="text-sm sm:text-base md:text-lg text-white tracking-[0.05em] font-medium leading-tight mb-0.5 truncate max-w-[150px] sm:max-w-full">CIA DA BELEZA</span>
+              <span className="text-[9px] sm:text-[10px] text-[#d4af37] tracking-widest leading-none truncate max-w-[150px] sm:max-w-full">CABELO E ESMALTERIA</span>
             </div>
           </div>
           
           {/* Desktop Menu */}
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#servicos" className="text-gray-300 hover:text-amber-500 transition-colors">
+            <a href="#servicos" className="text-gray-300 hover:text-[#d4af37] transition-colors">
               Serviços
             </a>
-            <a href="#galeria" className="text-gray-300 hover:text-amber-500 transition-colors">
+            <a href="#galeria" className="text-gray-300 hover:text-[#d4af37] transition-colors">
               Galeria
             </a>
-            <a href="#contato" className="text-gray-300 hover:text-amber-500 transition-colors">
+            <a href="#contato" className="text-gray-300 hover:text-[#d4af37] transition-colors">
               Contato
             </a>
             <Button 
               onClick={onBookNow}
-              className="bg-amber-500 hover:bg-amber-600 text-black"
+              className="bg-[#d4af37] hover:bg-[#b5952f] text-black"
             >
               AGENDAR
             </Button>
@@ -41,7 +41,7 @@ export function DarkHeader({ onBookNow }: DarkHeaderProps) {
           {/* Mobile Button */}
           <Button 
             onClick={onBookNow}
-            className="md:hidden bg-amber-500 hover:bg-amber-600 text-black text-sm px-6"
+            className="md:hidden bg-[#d4af37] hover:bg-[#b5952f] text-black text-[10px] sm:text-xs px-3 sm:px-6 h-9 font-medium whitespace-nowrap ml-2"
           >
             AGENDAR
           </Button>

@@ -6,19 +6,19 @@ export function DarkFooter() {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col items-center text-center">
           <div className="flex items-center gap-3 mb-4">
-            <Crown className="w-8 h-8 text-amber-500" />
+            <Crown className="w-8 h-8 text-[#d4af37]" />
             <div className="flex flex-col">
-              <span className="text-2xl tracking-wider">COMPANHIA DA BELEZA</span>
-              <span className="text-xs text-amber-500 tracking-widest">PREMIUM SALON</span>
+              <span className="text-xl sm:text-2xl tracking-[0.05em] text-white">CIA DA BELEZA</span>
+              <span className="text-xs text-[#d4af37] tracking-widest mt-1">CABELO E ESMALTERIA</span>
             </div>
           </div>
           <p className="text-gray-400 mb-6 max-w-md">
-            Excelência em cortes masculinos e tratamentos de beleza. 
+            Excelência em cabelos, mechas e esmalteria. 
             Transformando estilo em arte desde 2015.
           </p>
           <div className="border-t border-zinc-800 pt-6 w-full">
             <p className="text-gray-500 text-sm">
-              &copy; 2026 Companhia da Beleza. Todos os direitos reservados.
+              &copy; 2026 Cia da Beleza - Cabelo e Esmalteria. Todos os direitos reservados.
             </p>
           </div>
         </div>
