@@ -27,6 +27,7 @@ export interface BookingData {
   clientName?: string;
   clientPhone?: string;
   clientEmail?: string;
+  notes?: string;
 }
 
 const steps = [
@@ -66,6 +67,7 @@ export function BookingFlow({ onClose }: BookingFlowProps) {
       case 2:
         return !!bookingData.professional;
       case 3:
+        if (bookingData.service?.name === "Dúvidas/Informações") return true;
         return !!bookingData.date && !!bookingData.time;
       case 4:
         return !!bookingData.clientName && !!bookingData.clientPhone;
@@ -144,6 +146,7 @@ export function BookingFlow({ onClose }: BookingFlowProps) {
                 selectedTime={bookingData.time}
                 onSelectDate={(date) => updateBookingData({ date })}
                 onSelectTime={(time) => updateBookingData({ time })}
+                isOptional={bookingData.service?.name === "Dúvidas/Informações"}
               />
             )}
             {currentStep === 4 && (

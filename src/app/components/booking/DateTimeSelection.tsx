@@ -15,13 +15,15 @@ interface DateTimeSelectionProps {
   selectedTime?: string;
   onSelectDate: (date: string) => void;
   onSelectTime: (time: string) => void;
+  isOptional?: boolean;
 }
 
 export function DateTimeSelection({ 
   selectedDate, 
   selectedTime, 
   onSelectDate, 
-  onSelectTime 
+  onSelectTime,
+  isOptional
 }: DateTimeSelectionProps) {
   const [date, setDate] = useState<Date | undefined>(
     selectedDate ? new Date(selectedDate) : undefined
@@ -36,7 +38,10 @@ export function DateTimeSelection({
 
   return (
     <div>
-      <h3 className="text-xl text-white mb-6">Escolha Data e Horário</h3>
+      <h3 className="text-xl text-white mb-6">
+        Escolha Data e Horário
+        {isOptional && <span className="ml-2 text-sm text-amber-500 font-normal">(Opcional para dúvidas)</span>}
+      </h3>
       <div className="grid md:grid-cols-2 gap-6">
         {/* Calendar */}
         <div className="bg-zinc-800 p-4 rounded-lg border border-zinc-700">

@@ -1,4 +1,4 @@
-import { Crown } from "lucide-react";
+import { Crown, Calendar } from "lucide-react";
 import { Button } from "./ui/button";
 
 interface DarkHeaderProps {
@@ -32,18 +32,20 @@ export function DarkHeader({ onBookNow }: DarkHeaderProps) {
             </a>
             <Button 
               onClick={onBookNow}
-              className="bg-[#d4af37] hover:bg-[#b5952f] text-black"
+              className="bg-[#d4af37] hover:bg-[#b5952f] text-black flex items-center gap-2"
             >
-              AGENDAR
+              <Calendar className="w-4 h-4" />
+              AGENDAR HORÁRIO
             </Button>
           </nav>
           
           {/* Mobile Button */}
           <Button 
             onClick={onBookNow}
-            className="md:hidden bg-[#d4af37] hover:bg-[#b5952f] text-black text-[10px] sm:text-xs px-3 sm:px-6 h-9 font-medium whitespace-nowrap ml-2"
+            className="md:hidden bg-[#d4af37] hover:bg-[#b5952f] text-black text-[10px] sm:text-xs px-3 sm:px-4 h-9 font-medium whitespace-nowrap ml-2 flex items-center gap-1.5"
           >
-            AGENDAR
+            <Calendar className="w-3 h-3" />
+            AGENDAR HORÁRIO
           </Button>
         </div>
       </div>

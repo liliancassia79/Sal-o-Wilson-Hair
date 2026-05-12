@@ -12,6 +12,8 @@ interface ConfirmationModalProps {
 
 export function ConfirmationModal({ bookingData, onClose }: ConfirmationModalProps) {
   const formattedDate = bookingData.date ? format(new Date(bookingData.date), "dd/MM/yyyy") : "";
+const notesSection = bookingData.notes ? `\n\n*Dúvidas/Informações:*\n${bookingData.notes}` : "";
+
   const message = `Olá Cia da Beleza! Gostaria de confirmar meu agendamento:
     
 *Detalhes do Agendamento:*
@@ -23,7 +25,7 @@ export function ConfirmationModal({ bookingData, onClose }: ConfirmationModalPro
 
 *Meus Dados:*
 Nome: ${bookingData.clientName}
-Telefone: ${bookingData.clientPhone}`;
+Telefone: ${bookingData.clientPhone}${notesSection}`;
 
   const encodedMessage = encodeURIComponent(message);
   const whatsappUrl = `https://wa.me/5591983590575?text=${encodedMessage}`;

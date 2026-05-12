@@ -1,5 +1,6 @@
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { Textarea } from "../ui/textarea";
 import type { BookingData } from "../BookingFlow";
 
 interface ClientInfoProps {
@@ -50,6 +51,19 @@ export function ClientInfo({ data, onChange }: ClientInfoProps) {
             onChange={(e) => onChange({ clientEmail: e.target.value })}
             className="bg-zinc-800 border-zinc-700 text-white focus:border-amber-500"
             placeholder="seu@email.com"
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="notes" className="text-white mb-2 block">
+            Dúvidas ou Informações Adicionais (opcional)
+          </Label>
+          <Textarea
+            id="notes"
+            value={data.notes || ""}
+            onChange={(e) => onChange({ notes: e.target.value })}
+            className="bg-zinc-800 border-zinc-700 text-white focus:border-amber-500 min-h-[100px]"
+            placeholder="Escreva sua dúvida ou detalhe adicional aqui..."
           />
         </div>
       </div>

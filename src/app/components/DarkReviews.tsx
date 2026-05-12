@@ -74,13 +74,13 @@ export function DarkReviews() {
                     <p className="text-[#d4af37] text-sm">{review.service}</p>
                   </div>
                 </div>
-                
+
                 <div className="flex gap-1 mb-4">
                   {[...Array(review.rating)].map((_, i) => (
                     <Star key={i} className="w-4 h-4 text-[#d4af37] fill-[#d4af37]" />
                   ))}
                 </div>
-                
+
                 <p className="text-gray-400 italic leading-relaxed">
                   "{review.text}"
                 </p>

@@ -1,4 +1,4 @@
-import { Scissors, Sparkles, Palette, Flower2, Eye } from "lucide-react";
+import { Scissors, Sparkles, Palette, Flower2, Eye, HelpCircle } from "lucide-react";
 import { Card } from "../ui/card";
 import type { ComponentType, SVGProps } from "react";
 
@@ -27,6 +27,10 @@ const services: Service[] = [
   {
     name: "Serviços de Estética",
     icon: Flower2
+  },
+  {
+    name: "Dúvidas/Informações",
+    icon: HelpCircle
   }
 ];
 
