@@ -15,73 +15,40 @@ interface ConfirmationModalProps {
 export function ConfirmationModal({ bookingData, onClose }: ConfirmationModalProps) {
   const [isCreatingAppointment, setIsCreatingAppointment] = useState(false);
   const [error, setError] = useState("");
-  const formattedDate = bookingData.date ? format(new Date(bookingData.date), "dd/MM/yyyy") : "";
-  const notesSection = bookingData.notes ? `\n\n*Dúvidas/Informações:*\n${bookingData.notes}` : "";
-
-  const message = `Olá Cia da Beleza! Gostaria de confirmar meu agendamento:
-    
-*Detalhes do Agendamento:*
-💇‍♂️ Serviço: ${bookingData.service?.name}
-👤 Profissional: ${bookingData.professional?.name}
-📅 Data: ${formattedDate}
-⏰ Horário: ${bookingData.time}
-💰 Valor: R$ ${bookingData.service?.price}
-
-*Meus Dados:*
-Nome: ${bookingData.clientName}
-Telefone: ${bookingData.clientPhone}${notesSection}`;
 
     async function handleSendToWhatsApp() {
-    if (
-      !bookingData.service?.id ||
-      !bookingData.professional?.id ||
-      !bookingData.date ||
-      !bookingData.time ||
-      !bookingData.clientName ||
-      !bookingData.clientPhone
-    ) {
-      setError("Dados do agendamento incompletos.");
-      return;
-    }
+      if (
+        !bookingData.service?.id ||
+        !bookingData.professional?.id ||
+        !bookingData.date ||
+        !bookingData.time ||
+        !bookingData.clientName ||
+        !bookingData.clientPhone
+      ) {
+        setError("Dados do agendamento incompletos.");
+        return;
+      }
 
-    try {
-      setIsCreatingAppointment(true);
+      try {
+        setIsCreatingAppointment(true);
+        setError("");
 
-      setError("");
+        const response = await createAppointment({
+          clientName: bookingData.clientName,
+          clientPhone: bookingData.clientPhone,
+          clientEmail: bookingData.clientEmail,
+          serviceId: bookingData.service.id,
+          professionalId: bookingData.professional.id,
+          date: bookingData.date,
+          time: bookingData.time
+        });
 
-      const response = await createAppointment({
-        clientName: bookingData.clientName,
-        clientPhone: bookingData.clientPhone,
-        clientEmail: bookingData.clientEmail,
-
-        serviceId: bookingData.service.id,
-
-        professionalId: bookingData.professional.id,
-
-        date: bookingData.date,
-
-        time: bookingData.time
-      });
-
-      const encodedMessage = encodeURIComponent(
-        response.whatsappMessage
-      );
-
-      const whatsappUrl =
-        `https://wa.me/5591983590575?text=${encodedMessage}`;
-
-      window.open(whatsappUrl, "_blank");
-
-    } catch (error) {
-
-      setError(
-        "Não foi possível criar o agendamento. Tente outro horário."
-      );
-
-    } finally {
-
-      setIsCreatingAppointment(false);
-    }
+        window.open(response.whatsappLink, "_blank");
+      } catch (error) {
+        setError("Não foi possível criar o agendamento. Tente outro horário.");
+      } finally {
+        setIsCreatingAppointment(false);
+      }
   }
 
   return (
@@ -110,6 +77,7 @@ Telefone: ${bookingData.clientPhone}${notesSection}`;
           >
             Quase lá!
           </motion.h2>
+
           <motion.p 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -181,16 +149,16 @@ Telefone: ${bookingData.clientPhone}${notesSection}`;
                 {error}
               </p>
             )}
-            
-            <a
-              href={whatsappUrl}
-              target="_top"
-              rel="noopener noreferrer"
+
+            <button
+              type="button"
+              onClick={handleSendToWhatsApp}
+              disabled={isCreatingAppointment}
               className="w-full inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950 disabled:pointer-events-none disabled:opacity-50 h-9 px-4 py-2 bg-[#25D366] hover:bg-[#128C7E] text-white"
             >
               <MessageCircle className="w-5 h-5" />
-              Enviar para WhatsApp
-            </a>
+              {isCreatingAppointment ? "Criando agendamento..." : "Enviar para WhatsApp"}
+            </button>
             <Button
               onClick={onClose}
               variant="outline"

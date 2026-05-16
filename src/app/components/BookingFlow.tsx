@@ -36,6 +36,7 @@ export interface BookingData {
   clientName?: string;
   clientPhone?: string;
   clientEmail?: string;
+  notes?: string;
 }
 
 const steps = [

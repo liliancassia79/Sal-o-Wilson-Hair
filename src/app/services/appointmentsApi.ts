@@ -18,9 +18,10 @@ export interface CreateAppointmentResponse {
     date: string;
     time: string;
     price: number;
-  };
+   };
 
   whatsappMessage: string;
+  whatsappLink: string;
 }
 
 export async function createAppointment(
