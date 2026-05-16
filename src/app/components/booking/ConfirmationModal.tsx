@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { createAppointment } from "../../services/appointmentsApi";
 import { motion } from "motion/react";
-import { CheckCircle, Calendar, Clock, User, Scissors, CreditCard, MessageCircle } from "lucide-react";
+import {CheckCircle, Calendar, Clock, User, Scissors, CreditCard, MessageCircle} from "lucide-react";
 import { Button } from "../ui/button";
 import type { BookingData } from "../BookingFlow";
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
 interface ConfirmationModalProps {
@@ -16,44 +16,47 @@ export function ConfirmationModal({ bookingData, onClose }: ConfirmationModalPro
   const [isCreatingAppointment, setIsCreatingAppointment] = useState(false);
   const [error, setError] = useState("");
 
-    async function handleSendToWhatsApp() {
-      if (
-        !bookingData.service?.id ||
-        !bookingData.professional?.id ||
-        !bookingData.date ||
-        !bookingData.time ||
-        !bookingData.clientName ||
-        !bookingData.clientPhone
-      ) {
-        setError("Dados do agendamento incompletos.");
-        return;
-      }
+  const parseSelectedDate = (dateString: string) =>
+    parse(dateString, "yyyy-MM-dd", new Date());
 
-      try {
-        setIsCreatingAppointment(true);
-        setError("");
+  async function handleSendToWhatsApp() {
+    if (
+      !bookingData.service?.id ||
+      !bookingData.professional?.id ||
+      !bookingData.date ||
+      !bookingData.time ||
+      !bookingData.clientName ||
+      !bookingData.clientPhone
+    ) {
+      setError("Dados do agendamento incompletos.");
+      return;
+    }
 
-        const response = await createAppointment({
-          clientName: bookingData.clientName,
-          clientPhone: bookingData.clientPhone,
-          clientEmail: bookingData.clientEmail,
-          serviceId: bookingData.service.id,
-          professionalId: bookingData.professional.id,
-          date: bookingData.date,
-          time: bookingData.time
-        });
+    try {
+      setIsCreatingAppointment(true);
+      setError("");
 
-        window.open(response.whatsappLink, "_blank");
-      } catch (error) {
-        setError("Não foi possível criar o agendamento. Tente outro horário.");
-      } finally {
-        setIsCreatingAppointment(false);
-      }
+      const response = await createAppointment({
+        clientName: bookingData.clientName,
+        clientPhone: bookingData.clientPhone,
+        clientEmail: bookingData.clientEmail,
+        serviceId: bookingData.service.id,
+        professionalId: bookingData.professional.id,
+        date: bookingData.date,
+        time: bookingData.time
+      });
+
+      window.open(response.whatsappLink, "_blank");
+    } catch (error) {
+      setError("Não foi possível criar o agendamento. Tente outro horário.");
+    } finally {
+      setIsCreatingAppointment(false);
+    }
   }
 
   return (
     <div className="fixed inset-0 bg-black/95 z-[60] flex items-center justify-center p-4">
-      <motion.div 
+      <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: "spring", duration: 0.5 }}
@@ -61,7 +64,7 @@ export function ConfirmationModal({ bookingData, onClose }: ConfirmationModalPro
       >
         {/* Success Icon */}
         <div className="p-8 text-center">
-          <motion.div 
+          <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
@@ -69,7 +72,8 @@ export function ConfirmationModal({ bookingData, onClose }: ConfirmationModalPro
           >
             <CheckCircle className="w-12 h-12 text-amber-500" />
           </motion.div>
-          <motion.h2 
+
+          <motion.h2
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
@@ -78,7 +82,7 @@ export function ConfirmationModal({ bookingData, onClose }: ConfirmationModalPro
             Quase lá!
           </motion.h2>
 
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
@@ -89,7 +93,7 @@ export function ConfirmationModal({ bookingData, onClose }: ConfirmationModalPro
         </div>
 
         {/* Booking Details */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
@@ -117,7 +121,12 @@ export function ConfirmationModal({ bookingData, onClose }: ConfirmationModalPro
               <div>
                 <p className="text-sm text-gray-400">Data</p>
                 <p className="font-medium">
-                  {bookingData.date && format(new Date(bookingData.date), "dd 'de' MMMM 'de' yyyy", { locale: ptBR })}
+                  {bookingData.date &&
+                    format(
+                      parseSelectedDate(bookingData.date),
+                      "dd 'de' MMMM 'de' yyyy",
+                      { locale: ptBR }
+                    )}
                 </p>
               </div>
             </div>
@@ -134,7 +143,9 @@ export function ConfirmationModal({ bookingData, onClose }: ConfirmationModalPro
               <CreditCard className="w-5 h-5 text-amber-500" />
               <div>
                 <p className="text-sm text-gray-400">Valor</p>
-                <p className="font-medium text-amber-500">R$ {bookingData.service?.price}</p>
+                <p className="font-medium text-amber-500">
+                  R$ {bookingData.service?.price}
+                </p>
               </div>
             </div>
           </div>
@@ -159,6 +170,7 @@ export function ConfirmationModal({ bookingData, onClose }: ConfirmationModalPro
               <MessageCircle className="w-5 h-5" />
               {isCreatingAppointment ? "Criando agendamento..." : "Enviar para WhatsApp"}
             </button>
+
             <Button
               onClick={onClose}
               variant="outline"
