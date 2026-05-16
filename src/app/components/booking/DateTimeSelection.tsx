@@ -1,33 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Calendar } from "../ui/calendar";
 import { Card } from "../ui/card";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-
-const timeSlots = [
-  "09:00", "10:00", "11:00", "12:00",
-  "14:00", "15:00", "16:00", "17:00",
-  "18:00", "19:00"
-];
+import { getAvailableTimesByProfessional } from "../../services/professionalsApi";
 
 interface DateTimeSelectionProps {
+  selectedProfessional?: {
+    id: number;
+  };
   selectedDate?: string;
   selectedTime?: string;
   onSelectDate: (date: string) => void;
   onSelectTime: (time: string) => void;
-  isOptional?: boolean;
 }
 
 export function DateTimeSelection({ 
+  selectedProfessional,
   selectedDate, 
   selectedTime, 
   onSelectDate, 
-  onSelectTime,
-  isOptional
+  onSelectTime 
 }: DateTimeSelectionProps) {
   const [date, setDate] = useState<Date | undefined>(
-    selectedDate ? new Date(selectedDate) : undefined
+  selectedDate ? new Date(selectedDate) : undefined
   );
+  const [timeSlots, setTimeSlots] = useState<string[]>([]);
+  const [loadingTimes, setLoadingTimes] = useState(false);
+  const [error, setError] = useState("");
 
   const handleDateSelect = (newDate: Date | undefined) => {
     setDate(newDate);
@@ -36,12 +36,33 @@ export function DateTimeSelection({
     }
   };
 
+  useEffect(() => {
+    async function loadAvailableTimes() {
+      if (!selectedProfessional?.id || !selectedDate) return;
+
+      try {
+        setLoadingTimes(true);
+        setError("");
+
+        const data = await getAvailableTimesByProfessional(
+          selectedProfessional.id,
+          selectedDate
+        );
+
+        setTimeSlots(data.availableTimes);
+      } catch (error) {
+        setError("Não foi possível carregar os horários disponíveis.");
+      } finally {
+        setLoadingTimes(false);
+      }
+    }
+
+    loadAvailableTimes();
+  }, [selectedProfessional?.id, selectedDate]);
+
   return (
     <div>
-      <h3 className="text-xl text-white mb-6">
-        Escolha Data e Horário
-        {isOptional && <span className="ml-2 text-sm text-amber-500 font-normal">(Opcional para dúvidas)</span>}
-      </h3>
+      <h3 className="text-xl text-white mb-6">Escolha Data e Horário</h3>
       <div className="grid md:grid-cols-2 gap-6">
         {/* Calendar */}
         <div className="bg-zinc-800 p-4 rounded-lg border border-zinc-700">
@@ -81,6 +102,20 @@ export function DateTimeSelection({
           <h4 className="text-white mb-4">
             {selectedDate ? format(new Date(selectedDate), "dd 'de' MMMM", { locale: ptBR }) : "Selecione uma data"}
           </h4>
+          {loadingTimes && (
+            <p className="text-gray-400 mb-3">Carregando horários...</p>
+          )}
+
+          {error && (
+            <p className="text-red-400 mb-3">{error}</p>
+          )}
+
+          {selectedDate && !loadingTimes && timeSlots.length === 0 && !error && (
+            <p className="text-gray-400 mb-3">
+              Nenhum horário disponível para esta data.
+            </p>
+          )}
+                    
           <div className="grid grid-cols-3 gap-2 max-h-96 overflow-y-auto">
             {timeSlots.map((time) => {
               const isSelected = selectedTime === time;
