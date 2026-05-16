@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { createAppointment } from "../../services/appointmentsApi";
 import { motion } from "motion/react";
 import { CheckCircle, Calendar, Clock, User, Scissors, CreditCard, MessageCircle } from "lucide-react";
 import { Button } from "../ui/button";
@@ -11,8 +13,10 @@ interface ConfirmationModalProps {
 }
 
 export function ConfirmationModal({ bookingData, onClose }: ConfirmationModalProps) {
+  const [isCreatingAppointment, setIsCreatingAppointment] = useState(false);
+  const [error, setError] = useState("");
   const formattedDate = bookingData.date ? format(new Date(bookingData.date), "dd/MM/yyyy") : "";
-const notesSection = bookingData.notes ? `\n\n*Dúvidas/Informações:*\n${bookingData.notes}` : "";
+  const notesSection = bookingData.notes ? `\n\n*Dúvidas/Informações:*\n${bookingData.notes}` : "";
 
   const message = `Olá Cia da Beleza! Gostaria de confirmar meu agendamento:
     
@@ -27,8 +31,58 @@ const notesSection = bookingData.notes ? `\n\n*Dúvidas/Informações:*\n${booki
 Nome: ${bookingData.clientName}
 Telefone: ${bookingData.clientPhone}${notesSection}`;
 
-  const encodedMessage = encodeURIComponent(message);
-  const whatsappUrl = `https://wa.me/5591983590575?text=${encodedMessage}`;
+    async function handleSendToWhatsApp() {
+    if (
+      !bookingData.service?.id ||
+      !bookingData.professional?.id ||
+      !bookingData.date ||
+      !bookingData.time ||
+      !bookingData.clientName ||
+      !bookingData.clientPhone
+    ) {
+      setError("Dados do agendamento incompletos.");
+      return;
+    }
+
+    try {
+      setIsCreatingAppointment(true);
+
+      setError("");
+
+      const response = await createAppointment({
+        clientName: bookingData.clientName,
+        clientPhone: bookingData.clientPhone,
+        clientEmail: bookingData.clientEmail,
+
+        serviceId: bookingData.service.id,
+
+        professionalId: bookingData.professional.id,
+
+        date: bookingData.date,
+
+        time: bookingData.time
+      });
+
+      const encodedMessage = encodeURIComponent(
+        response.whatsappMessage
+      );
+
+      const whatsappUrl =
+        `https://wa.me/5591983590575?text=${encodedMessage}`;
+
+      window.open(whatsappUrl, "_blank");
+
+    } catch (error) {
+
+      setError(
+        "Não foi possível criar o agendamento. Tente outro horário."
+      );
+
+    } finally {
+
+      setIsCreatingAppointment(false);
+    }
+  }
 
   return (
     <div className="fixed inset-0 bg-black/95 z-[60] flex items-center justify-center p-4">
@@ -122,6 +176,12 @@ Telefone: ${bookingData.clientPhone}${notesSection}`;
           </p>
 
           <div className="flex flex-col gap-3">
+            {error && (
+              <p className="text-sm text-red-400 text-center">
+                {error}
+              </p>
+            )}
+            
             <a
               href={whatsappUrl}
               target="_top"
