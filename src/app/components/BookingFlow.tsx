@@ -14,20 +14,28 @@ interface BookingFlowProps {
 
 export interface BookingData {
   service?: {
+    id: number;
     name: string;
+    description: string;
     price: number;
     duration: number;
+    imageUrl: string;
   };
+
   professional?: {
+    id: number;
     name: string;
     photo: string;
+    specialty: string;
+    rating: number;
+    whatsappPhone: string;
   };
+
   date?: string;
   time?: string;
   clientName?: string;
   clientPhone?: string;
   clientEmail?: string;
-  notes?: string;
 }
 
 const steps = [
@@ -67,7 +75,6 @@ export function BookingFlow({ onClose }: BookingFlowProps) {
       case 2:
         return !!bookingData.professional;
       case 3:
-        if (bookingData.service?.name === "Dúvidas/Informações") return true;
         return !!bookingData.date && !!bookingData.time;
       case 4:
         return !!bookingData.clientName && !!bookingData.clientPhone;
@@ -136,17 +143,18 @@ export function BookingFlow({ onClose }: BookingFlowProps) {
             )}
             {currentStep === 2 && (
               <ProfessionalSelection 
+                selectedService={bookingData.service}
                 selectedProfessional={bookingData.professional}
                 onSelect={(professional) => updateBookingData({ professional })}
               />
             )}
             {currentStep === 3 && (
               <DateTimeSelection 
+                selectedProfessional={bookingData.professional}
                 selectedDate={bookingData.date}
                 selectedTime={bookingData.time}
                 onSelectDate={(date) => updateBookingData({ date })}
                 onSelectTime={(time) => updateBookingData({ time })}
-                isOptional={bookingData.service?.name === "Dúvidas/Informações"}
               />
             )}
             {currentStep === 4 && (
