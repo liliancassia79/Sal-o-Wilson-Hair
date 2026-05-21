@@ -1,3 +1,5 @@
+import { API_BASE_URL } from "./api";
+
 export interface CreateAppointmentRequest {
   clientName: string;
   clientPhone: string;
@@ -27,7 +29,7 @@ export interface CreateAppointmentResponse {
 export async function createAppointment(
   data: CreateAppointmentRequest
 ): Promise<CreateAppointmentResponse> {
-  const response = await fetch("http://localhost:3000/appointments", {
+  const response = await fetch(`${API_BASE_URL}/appointments`, {
     method: "POST",
 
     headers: {
