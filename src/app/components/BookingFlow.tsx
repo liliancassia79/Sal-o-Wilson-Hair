@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 import { ServiceSelection } from "./booking/ServiceSelection";
 import { ProfessionalSelection } from "./booking/ProfessionalSelection";
 import { DateTimeSelection } from "./booking/DateTimeSelection";
-import { ClientInfo } from "./booking/ClientInfo";
+import { ClientInfo, isClientInfoValid } from "./booking/ClientInfo";
 import { ConfirmationModal } from "./booking/ConfirmationModal";
 
 interface BookingFlowProps {
@@ -36,7 +36,6 @@ export interface BookingData {
   clientName?: string;
   clientPhone?: string;
   clientEmail?: string;
-  notes?: string;
 }
 
 const steps = [
@@ -78,7 +77,7 @@ export function BookingFlow({ onClose }: BookingFlowProps) {
       case 3:
         return !!bookingData.date && !!bookingData.time;
       case 4:
-        return !!bookingData.clientName && !!bookingData.clientPhone;
+        return isClientInfoValid(bookingData);
       default:
         return false;
     }
