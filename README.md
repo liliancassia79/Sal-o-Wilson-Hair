@@ -61,4 +61,3 @@ Acessível através do rodapé do site (`/admin`), o painel é protegido por log
 - `/src/supabaseClient.ts` - Configuração de comunicação segura com o Supabase.
 
 ---
-🔗 **Design Original no Figma**: [Acessar Protótipo](https://www.figma.com/make/3YOjMjkVgmcklxcPH04p7i/Cia-da-Beleza?t=CgnUVTscORExmIqw-1)
