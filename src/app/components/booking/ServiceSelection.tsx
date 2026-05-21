@@ -1,56 +1,73 @@
-import { Scissors, Sparkles, Palette, Flower2, Eye, HelpCircle } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Scissors, Sparkles, Palette, Flower2, Eye } from "lucide-react";
 import { Card } from "../ui/card";
 import type { ComponentType, SVGProps } from "react";
+import { getServices } from "../../services/servicesApi";
 
 interface Service {
+  id: number;
   name: string;
+  description: string;
+  price: number;
+  duration: number;
+  imageUrl: string;
   icon: ComponentType<SVGProps<SVGSVGElement>>;
 }
 
-const services: Service[] = [
-  {
-    name: "Cabelos & Tratamentos",
-    icon: Scissors
-  },
-  {
-    name: "Colorimetria & Mechas",
-    icon: Palette
-  },
-  {
-    name: "Manicure & Pedicure",
-    icon: Sparkles
-  },
-  {
-    name: "Design de Sobrancelhas",
-    icon: Eye
-  },
-  {
-    name: "Serviços de Estética",
-    icon: Flower2
-  },
-  {
-    name: "Dúvidas/Informações",
-    icon: HelpCircle
-  }
-];
+const serviceIcons = [Scissors, Palette, Sparkles, Eye, Flower2];
 
 interface ServiceSelectionProps {
-  selectedService?: Service;
+  selectedService?: {
+    id: number;
+  };
   onSelect: (service: Service) => void;
 }
 
 export function ServiceSelection({ selectedService, onSelect }: ServiceSelectionProps) {
-  return (
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+  async function loadServices() {
+    try {
+      const data = await getServices();
+
+      const servicesWithIcons = data.map((service, index) => ({
+        ...service,
+        icon: serviceIcons[index % serviceIcons.length]
+      }));
+
+      setServices(servicesWithIcons);
+    } catch (error) {
+      setError("Não foi possível carregar os serviços.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  loadServices();
+}, []);
+
+if (loading) {
+  return <p className="text-gray-400">Carregando serviços...</p>;
+}
+
+if (error) {
+  return <p className="text-red-400">{error}</p>;
+}
+
+return (
     <div>
       <h3 className="text-xl text-white mb-6">Escolha o Serviço</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {services.map((service) => {
           const Icon = service.icon;
-          const isSelected = selectedService?.name === service.name;
+          const isSelected = selectedService?.id === service.id;
 
           return (
             <Card
-              key={service.name}
+              key={service.id}
               onClick={() => onSelect(service)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {

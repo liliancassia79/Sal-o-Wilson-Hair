@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 import { ServiceSelection } from "./booking/ServiceSelection";
 import { ProfessionalSelection } from "./booking/ProfessionalSelection";
 import { DateTimeSelection } from "./booking/DateTimeSelection";
-import { ClientInfo } from "./booking/ClientInfo";
+import { ClientInfo, isClientInfoValid } from "./booking/ClientInfo";
 import { ConfirmationModal } from "./booking/ConfirmationModal";
 
 interface BookingFlowProps {
@@ -14,20 +14,28 @@ interface BookingFlowProps {
 
 export interface BookingData {
   service?: {
+    id: number;
     name: string;
+    description: string;
     price: number;
     duration: number;
+    imageUrl: string;
   };
+
   professional?: {
+    id: number;
     name: string;
     photo: string;
+    specialty: string;
+    rating: number;
+    whatsappPhone: string;
   };
+
   date?: string;
   time?: string;
   clientName?: string;
   clientPhone?: string;
   clientEmail?: string;
-  notes?: string;
 }
 
 const steps = [
@@ -67,10 +75,9 @@ export function BookingFlow({ onClose }: BookingFlowProps) {
       case 2:
         return !!bookingData.professional;
       case 3:
-        if (bookingData.service?.name === "Dúvidas/Informações") return true;
         return !!bookingData.date && !!bookingData.time;
       case 4:
-        return !!bookingData.clientName && !!bookingData.clientPhone;
+        return isClientInfoValid(bookingData);
       default:
         return false;
     }
@@ -136,17 +143,18 @@ export function BookingFlow({ onClose }: BookingFlowProps) {
             )}
             {currentStep === 2 && (
               <ProfessionalSelection 
+                selectedService={bookingData.service}
                 selectedProfessional={bookingData.professional}
                 onSelect={(professional) => updateBookingData({ professional })}
               />
             )}
             {currentStep === 3 && (
               <DateTimeSelection 
+                selectedProfessional={bookingData.professional}
                 selectedDate={bookingData.date}
                 selectedTime={bookingData.time}
                 onSelectDate={(date) => updateBookingData({ date })}
                 onSelectTime={(time) => updateBookingData({ time })}
-                isOptional={bookingData.service?.name === "Dúvidas/Informações"}
               />
             )}
             {currentStep === 4 && (
@@ -163,7 +171,7 @@ export function BookingFlow({ onClose }: BookingFlowProps) {
               onClick={handleBack}
               variant="outline"
               disabled={currentStep === 1}
-              className="border-zinc-700 text-white hover:bg-zinc-800 disabled:opacity-50"
+              className="border-zinc-700 bg-transparent text-white hover:bg-zinc-800 hover:text-white disabled:opacity-50"
             >
               Voltar
             </Button>
