@@ -1,4 +1,5 @@
 import { Crown } from "lucide-react";
+import { Link } from "react-router";
 
 export function DarkFooter() {
   return (
@@ -16,10 +17,13 @@ export function DarkFooter() {
             Excelência em cabelos, mechas e esmalteria. 
             Transformando estilo em arte desde 2015.
           </p>
-          <div className="border-t border-zinc-800 pt-6 w-full">
+          <div className="border-t border-zinc-800 pt-6 w-full flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-gray-500 text-sm">
               &copy; 2026 Cia da Beleza - Cabelo e Esmalteria. Todos os direitos reservados.
             </p>
+            <Link to="/admin" className="text-gray-700 hover:text-gray-400 text-xs transition-colors">
+              Área Restrita
+            </Link>
           </div>
         </div>
       </div>

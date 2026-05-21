@@ -7,7 +7,6 @@ import { DarkContact } from "./components/DarkContact";
 import { DarkReviews } from "./components/DarkReviews";
 import { DarkFooter } from "./components/DarkFooter";
 import { BookingFlow } from "./components/BookingFlow";
-import { WhatsAppFloat } from "./components/WhatsAppFloat";
 
 export default function App() {
   const [showBooking, setShowBooking] = useState(false);
@@ -23,7 +22,6 @@ export default function App() {
         <DarkContact />
       </main>
       <DarkFooter />
-      <WhatsAppFloat />
 
       {showBooking && <BookingFlow onClose={() => setShowBooking(false)} />}
     </div>

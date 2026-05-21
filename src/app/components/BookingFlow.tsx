@@ -7,6 +7,7 @@ import { ProfessionalSelection } from "./booking/ProfessionalSelection";
 import { DateTimeSelection } from "./booking/DateTimeSelection";
 import { ClientInfo, isClientInfoValid } from "./booking/ClientInfo";
 import { ConfirmationModal } from "./booking/ConfirmationModal";
+import { supabase } from "../../supabaseClient";
 
 interface BookingFlowProps {
   onClose: () => void;
@@ -49,12 +50,49 @@ export function BookingFlow({ onClose }: BookingFlowProps) {
   const [currentStep, setCurrentStep] = useState(1);
   const [bookingData, setBookingData] = useState<BookingData>({});
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [carregando, setCarregando] = useState(false);
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentStep < 4) {
       setCurrentStep(currentStep + 1);
     } else {
-      setShowConfirmation(true);
+      setCarregando(true);
+      try {
+        let startsAt = new Date().toISOString();
+        let endsAt = new Date(Date.now() + 60 * 60000).toISOString();
+        
+        if (bookingData.date && bookingData.time) {
+           const [year, month, day] = bookingData.date.split('-');
+           const [hours, minutes] = bookingData.time.split(':');
+           const localDate = new Date(Number(year), Number(month) - 1, Number(day), Number(hours), Number(minutes));
+           startsAt = localDate.toISOString();
+           const localEnd = new Date(localDate.getTime() + 60 * 60000);
+           endsAt = localEnd.toISOString();
+        }
+
+        const { data, error } = await supabase
+          .from('appointments')
+          .insert([
+            { 
+              client_name: bookingData.clientName, 
+              client_phone: bookingData.clientPhone, 
+              starts_at: startsAt,
+              ends_at: endsAt,
+              origin: 'site',
+              status: 'agendado',
+              notes: `[SITE] Serviço: ${bookingData.service?.name || 'Não informado'} | Profissional: ${bookingData.professional?.name || 'Qualquer um'} \n${bookingData.notes ? 'Obs: ' + bookingData.notes : ''}`
+            }
+          ]);
+
+        if (error) throw error;
+        
+        setShowConfirmation(true);
+      } catch (error: any) {
+        console.error('Erro ao agendar:', error);
+        alert(`Ops, ocorreu um erro ao salvar: ${error.message}`);
+      } finally {
+        setCarregando(false);
+      }
     }
   };
 
@@ -177,10 +215,10 @@ export function BookingFlow({ onClose }: BookingFlowProps) {
             </Button>
             <Button
               onClick={handleNext}
-              disabled={!canProceed()}
+              disabled={!canProceed() || carregando}
               className="bg-[#d4af37] hover:bg-[#b5952f] text-black disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {currentStep === 4 ? 'Confirmar' : 'Próximo'}
+              {currentStep === 4 ? (carregando ? 'Salvando...' : 'Confirmar') : 'Próximo'}
             </Button>
           </div>
         </div>
