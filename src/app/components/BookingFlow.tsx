@@ -171,7 +171,7 @@ export function BookingFlow({ onClose }: BookingFlowProps) {
               onClick={handleBack}
               variant="outline"
               disabled={currentStep === 1}
-              className="border-zinc-700 text-white hover:bg-zinc-800 disabled:opacity-50"
+              className="border-zinc-700 bg-transparent text-white hover:bg-zinc-800 hover:text-white disabled:opacity-50"
             >
               Voltar
             </Button>
