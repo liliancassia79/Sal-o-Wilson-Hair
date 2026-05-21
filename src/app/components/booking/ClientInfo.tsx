@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import type { BookingData } from "../BookingFlow";
@@ -60,9 +61,15 @@ export function isClientInfoValid(data: BookingData) {
 }
 
 export function ClientInfo({ data, onChange }: ClientInfoProps) {
-  const nameError = validateName(data.clientName);
-  const phoneError = validatePhone(data.clientPhone);
-  const emailError = validateEmail(data.clientEmail);
+  const [touched, setTouched] = useState({
+    clientName: false,
+    clientPhone: false,
+    clientEmail: false
+  });
+
+  const nameError = touched.clientName ? validateName(data.clientName) : "";
+  const phoneError = touched.clientPhone ? validatePhone(data.clientPhone) : "";
+  const emailError = touched.clientEmail ? validateEmail(data.clientEmail) : "";
 
   return (
     <div>
@@ -77,17 +84,19 @@ export function ClientInfo({ data, onChange }: ClientInfoProps) {
           <Input
             id="name"
             value={data.clientName || ""}
-            onChange={(e) =>
-              onChange({ clientName: e.target.value })
+            onChange={(e) => onChange({ clientName: e.target.value })}
+            onBlur={() =>
+              setTouched((current) => ({
+                ...current,
+                clientName: true
+              }))
             }
             className="bg-zinc-800 border-zinc-700 text-white focus:border-amber-500"
             placeholder="Digite seu nome"
           />
 
           {nameError && (
-            <p className="text-sm text-red-400 mt-1">
-              {nameError}
-            </p>
+            <p className="text-sm text-red-400 mt-1">{nameError}</p>
           )}
         </div>
 
@@ -100,17 +109,19 @@ export function ClientInfo({ data, onChange }: ClientInfoProps) {
             id="phone"
             type="tel"
             value={data.clientPhone || ""}
-            onChange={(e) =>
-              onChange({ clientPhone: e.target.value })
+            onChange={(e) => onChange({ clientPhone: e.target.value })}
+            onBlur={() =>
+              setTouched((current) => ({
+                ...current,
+                clientPhone: true
+              }))
             }
             className="bg-zinc-800 border-zinc-700 text-white focus:border-amber-500"
             placeholder="(91) 98765-4321"
           />
 
           {phoneError && (
-            <p className="text-sm text-red-400 mt-1">
-              {phoneError}
-            </p>
+            <p className="text-sm text-red-400 mt-1">{phoneError}</p>
           )}
         </div>
 
@@ -123,17 +134,19 @@ export function ClientInfo({ data, onChange }: ClientInfoProps) {
             id="email"
             type="email"
             value={data.clientEmail || ""}
-            onChange={(e) =>
-              onChange({ clientEmail: e.target.value })
+            onChange={(e) => onChange({ clientEmail: e.target.value })}
+            onBlur={() =>
+              setTouched((current) => ({
+                ...current,
+                clientEmail: true
+              }))
             }
             className="bg-zinc-800 border-zinc-700 text-white focus:border-amber-500"
             placeholder="seu@email.com"
           />
 
           {emailError && (
-            <p className="text-sm text-red-400 mt-1">
-              {emailError}
-            </p>
+            <p className="text-sm text-red-400 mt-1">{emailError}</p>
           )}
         </div>
       </div>
